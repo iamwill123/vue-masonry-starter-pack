@@ -17,7 +17,7 @@
 </template>
 <script>
 import Vue from 'vue'
-import VueMasonryPlugin from 'vue-masonry'
+import {VueMasonryPlugin} from 'vue-masonry'
 import {HTTP, RSS2JSON} from './http-common'
 
 Vue.use(VueMasonryPlugin)
