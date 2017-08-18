@@ -91,11 +91,13 @@
         }
       }
     }
-    hr[data-v-5f2bf094] {
+    
+    hr {
       @include mobileAndTablet {
         display: none;
       }
     }
+    
     .navbar {
       @include mobile {
         padding: 0rem 1rem;
