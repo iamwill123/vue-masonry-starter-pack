@@ -68,8 +68,32 @@
     /*margin-top: 60px;*/
     .sw-logo {
       text-align: center;
+      
+      @include mobileAndTablet {
+        margin-top: 0.5rem;
+      }
+      
       img {
         width: 100px;
+        -webkit-transition: 500ms;
+        -moz-transition: 500ms;
+        -ms-transition: 500ms;
+        -o-transition: 500ms;
+        transition: 500ms;
+        
+        @include mobileAndTablet {
+          width: 60px;
+          -webkit-transition: 500ms;
+          -moz-transition: 500ms;
+          -ms-transition: 500ms;
+          -o-transition: 500ms;
+          transition: 500ms;
+        }
+      }
+    }
+    hr[data-v-5f2bf094] {
+      @include mobileAndTablet {
+        display: none;
       }
     }
     .navbar {
