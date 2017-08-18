@@ -98,43 +98,43 @@ export default {
       display: block;
       clear: both;
     }
-  }
-  .item {
-    @include mobile {
-      width: 100%;
-    }
-    @include tablet {
-      width: 50%;
-    }
-    @include desktop {
-      width: 33.333%;
-    }
-  }
-  .item {
-    float: left;
-    opacity: 0.9;
-    padding: 0.5rem;
-    -webkit-transition: 100ms;
-       -moz-transition: 100ms;
-        -ms-transition: 100ms;
-         -o-transition: 100ms;
-            transition: 100ms;
-  
-    img {
-      display: block;
-      width: 100%;
-    }
     
-    &:hover {
-      cursor: pointer;
-      opacity: 1;
-      padding: 0.2rem;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    .item {
+      float: left;
+      opacity: 0.9;
+      padding: 0.5rem;
       -webkit-transition: 100ms;
          -moz-transition: 100ms;
           -ms-transition: 100ms;
            -o-transition: 100ms;
               transition: 100ms;
+    
+      img {
+        display: block;
+        width: 100%;
+      }
+      
+      &:hover {
+        cursor: pointer;
+        opacity: 1;
+        padding: 0.2rem;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -webkit-transition: 100ms;
+           -moz-transition: 100ms;
+            -ms-transition: 100ms;
+             -o-transition: 100ms;
+                transition: 100ms;
+      }
+      
+      @include mobile {
+        width: 100%;
+      }
+      @include tablet {
+        width: 50%;
+      }
+      @include desktop {
+        width: 33.333%;
+      }
     }
   }
 </style>

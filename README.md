@@ -16,5 +16,20 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
+
 ```
+
+## Version Control
+Bitbucket, https://bitbucket.org/iamwillyuan/sw-blog
+
+## Hosting
+https://www.netlify.com/blog/2016/09/21/a-step-by-step-guide-victor-hugo-on-netlify/
+
+## References
+
+# favicon generator
+http://www.favicon-generator.org/
+
+
+
 
