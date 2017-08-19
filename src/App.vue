@@ -43,7 +43,7 @@
     <!--Footer-->
     <footer class="navbar navbar-default navbar-fixed-bottom">
       <div class="container">
-        <p class="navbar-text pull-left">©2017</p>
+        <p class="navbar-text pull-left">© {{ dateNow }}</p>
       </div>
     </footer>
     <!--/.Footer-->
@@ -51,9 +51,29 @@
 </template>
 
 <script>
-  export default {
-    name: 'app'
+import Vue from 'vue'
+import moment from 'moment'
+
+Vue.use(moment)
+
+export default {
+  name: 'app',
+  data () {
+    return {
+      dateNow: ''
+    }
+  },
+  methods: {
+    time: function () {
+      // var self = this
+      this.dateNow = moment().format('MMMM Do YYYY, h:mm:ss a')
+      // setInterval(self.time, 1000)
+    }
+  },
+  mounted: function () {
+    this.time()
   }
+}
 </script>
 
 <style lang="scss" scoped>

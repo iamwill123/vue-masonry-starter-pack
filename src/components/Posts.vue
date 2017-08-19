@@ -12,6 +12,17 @@
         <hr>
         <photo-layout v-bind:post-id="post.id" v-if="post.id == 0"></photo-layout>
       </div>
+      
+      <div v-for="feed in feeds.items" v-if="$route.params.id == 4">
+        <div class="caption">
+          <h3> {{ feed.title | uppercase }} </h3>
+          <p> by: {{ feed.author }} </p>
+          <p> {{ feed.pubDate | formatDate }} </p>
+          <div v-html="feed.description"></div>
+          <p> Route-id: {{ $route.params.id }} </p>
+          <!--<p> Post-id: {{ post.id }} </p>-->
+        </div>
+      </div>
       <!--<div v-if="$route.params.id">-->
       <!--  <div class="caption">-->
       <!--    <h3> {{ posts[$route.params.id].title | uppercase }} </h3>-->
@@ -30,6 +41,7 @@
 
 <script>
 import PhotoLayout from '@/components/photo-layout'
+import {RSS2JSON} from './http-common'
 
 export default {
   name: 'Posts',
@@ -61,7 +73,34 @@ export default {
         'id': 3,
         'title': 'ea molestias quasi exercitationem repellat qui ipsa sit aut',
         'body': 'et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut'
-      }]
+      }],
+      feeds: [],
+      errors: []
+    }
+  },
+  created: function () {
+    let mediumUserWill = `https://medium.com/feed/@iamwill.us`
+    RSS2JSON.get(`?rss_url=${mediumUserWill}`)
+    .then(response => {
+      let mediumResponse = response.data
+      this.getMediumFeed(mediumResponse)
+      console.log(`
+        Status Response: ${mediumResponse.status},
+        Medium Url: ${mediumResponse.feed.url},
+        Medium Title: ${mediumResponse.feed.title},
+        Medium Link: ${mediumResponse.feed.link},
+        Medium Image: ${mediumResponse.feed.image}
+      `)
+    })
+    .catch(e => {
+      this.errors.push(e)
+      console.log(`<error> ${e} </error>`)
+    })
+  },
+  methods: {
+    getMediumFeed: function (result) {
+      this.feeds = result
+      console.log(result)
     }
   }
 }
