@@ -1,6 +1,7 @@
 <template>
   <div class="blog container">
     <div class="row">
+      
       <div v-masonry class="item-container" transition-duration="0.5s" item-selector=".item">
         <div v-if="posts && posts.length">
           <div v-masonry-tile class="item" v-for="post in posts">
@@ -13,8 +14,6 @@
                 <p>by: {{post.user}}</p>
                 <p>
                   <router-link :to="'/posts/' + post.id" class="btn btn-outline-primary btn-block" role="button">Read</router-link>
-                  <!--<a href="#" class="btn btn-primary" role="button">Read More</a>-->
-                  <!--<a href="#" class="btn btn-danger" role="button" v-on:click="deletePost(post)">Delete</a>-->
                 </p>
               </div>
             </div>
@@ -33,8 +32,6 @@
                 <p>by: {{feed.author}}</p>
                 <p>
                   <router-link :to="'/posts/4'" class="btn btn-outline-primary btn-block" role="button">Read</router-link>
-                  <!--<a href="#" class="btn btn-primary" role="button">Read More</a>-->
-                  <!--<a href="#" class="btn btn-danger" role="button" v-on:click="deletePost(post)">Delete</a>-->
                 </p>
               </div>
             </div>
@@ -216,7 +213,8 @@ export default {
       }
       
       .img-blend {
-        background: beige;
+        background: lavenderblush;
+        border-radius: .25rem;
         
         img {
           display: block;
