@@ -110,7 +110,7 @@ export default {
   methods: {
     getMediumFeed: function (result) {
       this.feeds = result
-      console.log(result)
+      console.log(`Medium fetch successful`)
     },
     deletePost: function (post) {
       console.log(post)

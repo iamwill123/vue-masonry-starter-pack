@@ -1,7 +1,8 @@
 <!--https://shershen08.github.io/vue-plugins-demo-static/index.html#/masonry-->
 <template>
   <div v-masonry class="PhotoLayout item-container" transition-duration="0.3s" item-selector=".item">
-    <div v-if="photos && photos.length">
+    <grid-loader :loading="loading" :color="color" :size="size"></grid-loader>
+    <div v-if="photos && photos.length && !loading">
       <!--<p>{{postId}}</p>-->
       <div v-masonry-tile class="item" v-for="photo in photos" :key="photo.id">
          <!-- block item markup -->
@@ -19,15 +20,22 @@
 import Vue from 'vue'
 import {VueMasonryPlugin} from 'vue-masonry'
 import {HTTP} from './http-common'
+import GridLoader from 'vue-spinner/src/GridLoader.vue'
 
 Vue.use(VueMasonryPlugin)
 
 export default {
   name: 'PhotoLayout',
   props: ['postId'],
+  components: {
+    GridLoader
+  },
   data () {
     return {
-      msg: 'Welcome to Your Photo gallery',
+      msg: 'Welcome to your gallery',
+      loading: false,
+      color: '#0275d8',
+      size: '25px',
       photos: [],
       errors: []
     }
@@ -35,6 +43,7 @@ export default {
   created: function () {
     let API_KEY = `8dc862c7d439e77f903ad871743164b9`
     let euroTripAlbumPhotosetId = `72157683737917494`
+    this.loading = true
     HTTP.get(`?method=flickr.photosets.getPhotos&api_key=${API_KEY}&photoset_id=${euroTripAlbumPhotosetId}&privacy_filter=1&format=json&nojsoncallback=1`)
     .then(response => {
       let flickrResponse = response.data
@@ -54,13 +63,10 @@ export default {
   },
   methods: {
     getFlickrImages: function (result) {
+      setTimeout(() => { this.loading = false }, 2000)
       this.photos = result.photoset.photo.map(function (img) {
         return `https://farm${img.farm}.static.flickr.com/${img.server}/${img.id}_${img.secret}.jpg`
       })
-    },
-    getMediumFeed: function (result) {
-      this.feeds = result
-      console.log(result)
     }
   },
   mounted: function () {
@@ -71,7 +77,12 @@ export default {
 
 <style lang="scss" scoped>
   @import 'styles/global.scss';
-  
+  .v-spinner {
+    position: absolute;
+    left: 50%;
+    top: -50px;
+    z-index: 1;
+  }
   .item-container {
     width: 100%;
     

@@ -12,7 +12,7 @@
         </div>
         <hr>
         <photo-layout v-bind:post-id="post.id" v-if="post.id == 0"></photo-layout>
-        <hr>
+        <hr v-if="post.id == 0">
       </div>
       
       <div v-for="feed in feeds.items" v-if="$route.params.id == 4">
@@ -130,7 +130,7 @@ export default {
   methods: {
     getMediumFeed: function (result) {
       this.feeds = result
-      console.log(result)
+      // console.log(result)
     }
   }
 }
