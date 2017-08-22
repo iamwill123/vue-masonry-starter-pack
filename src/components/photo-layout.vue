@@ -85,6 +85,7 @@ export default {
       float: left;
       opacity: 0.9;
       padding: 0.5rem;
+      
       -webkit-transition: 100ms;
          -moz-transition: 100ms;
           -ms-transition: 100ms;
@@ -94,6 +95,7 @@ export default {
       img {
         display: block;
         width: 100%;
+        border-radius: .25rem;
       }
       
       &:hover {

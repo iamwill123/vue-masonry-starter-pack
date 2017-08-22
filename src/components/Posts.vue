@@ -12,6 +12,7 @@
         </div>
         <hr>
         <photo-layout v-bind:post-id="post.id" v-if="post.id == 0"></photo-layout>
+        <hr>
       </div>
       
       <div v-for="feed in feeds.items" v-if="$route.params.id == 4">
@@ -22,6 +23,7 @@
           <div v-html="feed.description"></div>
           <p> Route-id: {{ $route.params.id }} </p>
         </div>
+        <hr>
       </div>
       
       <div v-show="posts || feeds.item" v-masonry class="item-container" transition-duration="0.2s" item-selector=".item">
