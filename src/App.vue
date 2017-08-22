@@ -65,9 +65,7 @@ export default {
   },
   methods: {
     time: function () {
-      // var self = this
       this.dateNow = moment().format('MMMM Do YYYY, h:mm:ss a')
-      // setInterval(self.time, 1000)
     }
   },
   mounted: function () {

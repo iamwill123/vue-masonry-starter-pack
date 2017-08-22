@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
+
       <div v-for="post in posts" v-if="$route.params.id == post.id">
         <div class="caption">
           <h3> {{ post.title | uppercase }} </h3>
@@ -20,28 +21,55 @@
           <p> {{ feed.pubDate | formatDate }} </p>
           <div v-html="feed.description"></div>
           <p> Route-id: {{ $route.params.id }} </p>
-          <!--<p> Post-id: {{ post.id }} </p>-->
         </div>
       </div>
-      <!--<div v-if="$route.params.id">-->
-      <!--  <div class="caption">-->
-      <!--    <h3> {{ posts[$route.params.id].title | uppercase }} </h3>-->
-      <!--    <p> by: {{ posts[$route.params.id].user }} </p>-->
-      <!--    <p> {{ posts[$route.params.id].body }} </p>-->
-          
-      <!--    <p> post id: {{ $route.params.id }} </p>-->
-      <!--  </div>-->
-      <!--</div>-->
-      <div v-else class="post-navigation">
-        <p>Check out: {{post.id}}</p>
-      </div>
+      
+      <div v-show="posts || feeds.item" v-masonry class="item-container" transition-duration="0.2s" item-selector=".item">
+        <div v-for="post in posts">
+          <div class="post-navigation">
+            <div v-masonry-tile class="item">
+              <div class="item-content">
+                <div class="caption">
+                  <h4> {{ post.title }} </h4>
+                  <p> by: {{ post.user }} </p>
+                  <p>
+                    <router-link :to="'/posts/' + post.id" class="btn btn-outline-primary btn-block" role="button">Read</router-link>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div v-for="feed in feeds.items">
+          <div class="post-navigation">
+            <div v-masonry-tile class="item">
+              <div class="item-content">
+                <div class="caption">
+                  <h4> {{ feed.title }} </h4>
+                  <p> by: {{ feed.author }} </p>
+                  <p>
+                    <router-link :to="'/posts/4'" class="btn btn-outline-primary btn-block" role="button">Read</router-link>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div><!--masonry end-->
+      
     </div>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import PhotoLayout from '@/components/photo-layout'
+import {VueMasonryPlugin} from 'vue-masonry'
 import {RSS2JSON} from './http-common'
+
+Vue.use(VueMasonryPlugin)
 
 export default {
   name: 'Posts',
@@ -107,8 +135,93 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-   .post-navigation {
+  @import 'styles/global.scss';
+  
+  .post-navigation {
+    display: block;
+    bottom: 0;
+  }
+  .item-container {
+    width: 100%;
+    margin: 0 auto;
+    
+    &:after {
+      content: '';
       display: block;
-      bottom: 0;
-   }
+      clear: both;
+    }
+  }
+  .item {
+    @include mobile {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    @include tablet {
+      width: 50%;
+      margin-bottom: 10px;
+    }
+    @include desktop {
+      margin: 10px;
+      width: 360px;
+    }
+  }
+  .item {
+    float: left;
+    opacity: 1;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 3px 2px 0 rgba(0, 0, 0, 0.01);
+  
+    .item-content {
+      width: 100%;
+      padding: 0.9rem;
+      background-color: whitesmoke;
+      
+      .caption h3 {
+        margin-top: 1rem;
+        margin-bottom: 0.1rem;
+      }
+      
+       &:hover {
+        /*cursor: pointer;*/
+        opacity: 1;
+        padding: 0.8rem;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -webkit-transition: 100ms;
+        -moz-transition: 100ms;
+        -ms-transition: 100ms;
+        -o-transition: 100ms;
+        transition: 100ms;
+        
+        img {
+          opacity: 1;
+          -webkit-transition: 500ms;
+          -moz-transition: 500ms;
+          -ms-transition: 500ms;
+          -o-transition: 500ms;
+          transition: 500ms;
+        }
+      }
+    }
+    
+    .img-blend {
+      background: beige;
+      
+      img {
+        display: block;
+        width: 100%;
+        border-radius: .25rem;
+        opacity: 0.9;
+      }
+    }
+  }
 </style>
+
+<!--<div v-if="$route.params.id">-->
+<!--  <div class="caption">-->
+<!--    <h3> {{ posts[$route.params.id].title | uppercase }} </h3>-->
+<!--    <p> by: {{ posts[$route.params.id].user }} </p>-->
+<!--    <p> {{ posts[$route.params.id].body }} </p>-->
+    
+<!--    <p> post id: {{ $route.params.id }} </p>-->
+<!--  </div>-->
+<!--</div>-->

@@ -20,6 +20,27 @@
             </div>
           </div>
         </div>
+        
+        <div v-if="feeds.items">
+          <div v-masonry-tile class="item" v-for="feed in feeds.items">
+            <div class="item-content">
+              <div class="img-blend">
+                <img src="http://placehold.it/300x150" alt="">
+                <!--<img v-bind:src="http://placehold.it/300x150">-->
+              </div>
+              <div class="caption">
+                <h3>{{feed.title | uppercase}}</h3>
+                <p>by: {{feed.author}}</p>
+                <p>
+                  <router-link :to="'/posts/4'" class="btn btn-outline-primary btn-block" role="button">Read</router-link>
+                  <!--<a href="#" class="btn btn-primary" role="button">Read More</a>-->
+                  <!--<a href="#" class="btn btn-danger" role="button" v-on:click="deletePost(post)">Delete</a>-->
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
       </div>
     </div>
   </div>  
@@ -28,6 +49,7 @@
 <script>
 import Vue from 'vue'
 import {VueMasonryPlugin} from 'vue-masonry'
+import {RSS2JSON} from './http-common'
 
 Vue.use(VueMasonryPlugin)
 
@@ -37,6 +59,8 @@ export default {
     return {
       title: 'Blog App',
       newPost: {},
+      feeds: [],
+      errors: [],
       posts: [{
         'user': 'Will & Steph',
         'id': 0,
@@ -67,7 +91,30 @@ export default {
       }]
     }
   },
+  created: function () {
+    let mediumUserWill = `https://medium.com/feed/@iamwill.us`
+    RSS2JSON.get(`?rss_url=${mediumUserWill}`)
+    .then(response => {
+      let mediumResponse = response.data
+      this.getMediumFeed(mediumResponse)
+      console.log(`
+        Status Response: ${mediumResponse.status},
+        Medium Url: ${mediumResponse.feed.url},
+        Medium Title: ${mediumResponse.feed.title},
+        Medium Link: ${mediumResponse.feed.link},
+        Medium Image: ${mediumResponse.feed.image}
+      `)
+    })
+    .catch(e => {
+      this.errors.push(e)
+      console.log(`<error> ${e} </error>`)
+    })
+  },
   methods: {
+    getMediumFeed: function (result) {
+      this.feeds = result
+      console.log(result)
+    },
     deletePost: function (post) {
       console.log(post)
       this.posts.splice(this.posts.indexOf(post), 1)
@@ -85,18 +132,6 @@ export default {
   mounted: function () {
     // Vue.redrawVueMasonry()
   }
-  // ,
-  // components: {
-  //   Posts,
-  //   PostsDetail
-  // }
-// ,
-  // created: function () {
-  //   this.$http.get('./src/assets/data.json').then(function (response) {
-  //     console.log(response.data)
-  //     this.posts = response.data
-  //   })
-  // }
 }
 </script>
 
@@ -190,8 +225,6 @@ export default {
           opacity: 0.9;
         }
       }
-      
-      
     }
 
   }

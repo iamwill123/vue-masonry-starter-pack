@@ -18,7 +18,7 @@
 <script>
 import Vue from 'vue'
 import {VueMasonryPlugin} from 'vue-masonry'
-import {HTTP, RSS2JSON} from './http-common'
+import {HTTP} from './http-common'
 
 Vue.use(VueMasonryPlugin)
 
@@ -29,7 +29,6 @@ export default {
     return {
       msg: 'Welcome to Your Photo gallery',
       photos: [],
-      feeds: [],
       errors: []
     }
   },
@@ -46,23 +45,6 @@ export default {
         Owner Name: ${flickrResponse.photoset.ownername},
         Album Name: ${flickrResponse.photoset.title},
         Total Photos: ${flickrResponse.photoset.total}
-      `)
-    })
-    .catch(e => {
-      this.errors.push(e)
-      console.log(`<error> ${e} </error>`)
-    })
-    let mediumUserWill = `https://medium.com/feed/@iamwill.us`
-    RSS2JSON.get(`?rss_url=${mediumUserWill}`)
-    .then(response => {
-      let mediumResponse = response.data
-      this.getMediumFeed(mediumResponse)
-      console.log(`
-        Status Response: ${mediumResponse.status},
-        Medium Url: ${mediumResponse.feed.url},
-        Medium Title: ${mediumResponse.feed.title},
-        Medium Link: ${mediumResponse.feed.link},
-        Medium Image: ${mediumResponse.feed.image}
       `)
     })
     .catch(e => {
