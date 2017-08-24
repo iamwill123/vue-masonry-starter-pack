@@ -35,7 +35,7 @@ export default {
       msg: 'Welcome to your gallery',
       loading: false,
       color: '#0275d8',
-      size: '25px',
+      size: '20px',
       photos: [],
       errors: []
     }
@@ -82,6 +82,12 @@ export default {
     left: 50%;
     top: -50px;
     z-index: 1;
+    @include mobile {
+      left: 40%;
+    }
+    @include tablet {
+      left: 45%;
+    }
   }
   .item-container {
     width: 100%;

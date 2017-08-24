@@ -143,6 +143,11 @@ export default {
     display: block;
     bottom: 0;
   }
+  .caption {
+    @include mobile {
+      padding: 0 15px;
+    }
+  }
   .item-container {
     width: 100%;
     margin: 0 auto;
