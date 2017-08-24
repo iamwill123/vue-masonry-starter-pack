@@ -2,18 +2,20 @@
 <template>
   <div v-masonry class="PhotoLayout item-container" transition-duration="0.3s" item-selector=".item">
     <grid-loader :loading="loading" :color="color" :size="size"></grid-loader>
-    <div v-if="photos && photos.length && !loading">
-      <!--<p>{{postId}}</p>-->
-      <div v-masonry-tile class="item" v-for="photo in photos" :key="photo.id">
-         <!-- block item markup -->
-        <img v-bind:src="photo" alt="euroTrip">
+    <transition name="fade">
+      <div v-if="photos && photos.length && !loading">
+        <!--<p>{{postId}}</p>-->
+        <div v-masonry-tile class="item" v-for="photo in photos" :key="photo.id">
+           <!-- block item markup -->
+          <img v-bind:src="photo" alt="euroTrip">
+        </div>
       </div>
-    </div>
-    <div v-if="errors && errors.length">
-      <div v-masonry-tile class="item" v-for="error in errors" :key="error.id">
-        {{error.message}}
+      <div v-if="errors && errors.length">
+        <div v-masonry-tile class="item" v-for="error in errors" :key="error.id">
+          {{error.message}}
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 <script>
@@ -77,6 +79,15 @@ export default {
 
 <style lang="scss" scoped>
   @import 'styles/global.scss';
+  
+  /* transition animations */
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0
+  }
+    
   .v-spinner {
     position: absolute;
     left: 50%;

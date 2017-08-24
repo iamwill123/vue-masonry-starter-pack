@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
-
+      
       <div v-for="post in posts" v-if="$route.params.id == post.id">
         <div class="caption">
           <h3> {{ post.title | uppercase }} </h3>
