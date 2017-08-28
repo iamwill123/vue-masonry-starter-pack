@@ -1,30 +1,40 @@
 <!--https://shershen08.github.io/vue-plugins-demo-static/index.html#/masonry-->
+<!--https://alligator.io/vuejs/vue-lazy-load-images/?utm_campaign=Alligator.io&utm_medium=email&utm_source=Alligator.io_30-->
 <template>
   <div v-masonry class="PhotoLayout item-container" transition-duration="0.3s" item-selector=".item">
-    <grid-loader :loading="loading" :color="color" :size="size"></grid-loader>
-    <transition name="fade">
-      <div v-if="photos && photos.length && !loading">
-        <!--<p>{{postId}}</p>-->
-        <div v-masonry-tile class="item" v-for="photo in photos" :key="photo.id">
-           <!-- block item markup -->
-          <img v-bind:src="photo" alt="euroTrip">
-        </div>
+    <div v-if="photos && photos.length">
+      <!--<p>{{postId}}</p>-->
+      <div v-masonry-tile class="item" v-for="photo in photos" :key="photo.id">
+         <!-- block item markup -->
+        <clazy-load :src="photo" alt="euroTrip">
+          <transition name="fade" slot="image">
+            <img :src="photo" alt="euroTrip">
+          </transition>
+          <transition name="fade" slot="placeholder">
+            <div slot="placeholder">
+              <!--<grid-loader :loading="loading" :color="color" :size="size"></grid-loader>-->
+              <div class="placeholderBCG"></div>
+            </div>
+          </transition>
+        </clazy-load>
       </div>
-      <div v-if="errors && errors.length">
-        <div v-masonry-tile class="item" v-for="error in errors" :key="error.id">
-          {{error.message}}
-        </div>
+    </div>
+    <div v-if="errors && errors.length">
+      <div v-masonry-tile class="item" v-for="error in errors" :key="error.id">
+        {{error.message}}
       </div>
-    </transition>
+    </div>
   </div>
 </template>
 <script>
 import Vue from 'vue'
 import {VueMasonryPlugin} from 'vue-masonry'
+import VueClazyLoad from 'vue-clazy-load'
 import {HTTP} from './http-common'
 import GridLoader from 'vue-spinner/src/GridLoader.vue'
 
 Vue.use(VueMasonryPlugin)
+Vue.use(VueClazyLoad)
 
 export default {
   name: 'PhotoLayout',
@@ -35,7 +45,7 @@ export default {
   data () {
     return {
       msg: 'Welcome to your gallery',
-      loading: false,
+      // loading: false,
       color: '#0275d8',
       size: '20px',
       photos: [],
@@ -45,11 +55,12 @@ export default {
   created: function () {
     let API_KEY = `8dc862c7d439e77f903ad871743164b9`
     let euroTripAlbumPhotosetId = `72157683737917494`
-    this.loading = true
+    // this.loading = true
     HTTP.get(`?method=flickr.photosets.getPhotos&api_key=${API_KEY}&photoset_id=${euroTripAlbumPhotosetId}&privacy_filter=1&format=json&nojsoncallback=1`)
     .then(response => {
       let flickrResponse = response.data
       this.getFlickrImages(flickrResponse)
+      setTimeout(() => { this.redrawMason() }, 1200) // temp fix
       // this.photos = response.data
       console.log(`
         Status Response: ${flickrResponse.stat},
@@ -65,14 +76,14 @@ export default {
   },
   methods: {
     getFlickrImages: function (result) {
-      setTimeout(() => { this.loading = false }, 2000)
+      // setTimeout(() => { this.loading = false }, 2000) custom loader
       this.photos = result.photoset.photo.map(function (img) {
         return `https://farm${img.farm}.static.flickr.com/${img.server}/${img.id}_${img.secret}.jpg`
       })
+    },
+    redrawMason: function () {
+      Vue.redrawVueMasonry()
     }
-  },
-  mounted: function () {
-    // Vue.redrawVueMasonry()
   }
 }
 </script>
@@ -80,26 +91,28 @@ export default {
 <style lang="scss" scoped>
   @import 'styles/global.scss';
   
-  /* transition animations */
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
   }
-  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-    opacity: 0
+  .placeholderBCG {
+    background-color: whitesmoke;
+    display: inline-block;
+    width: 100%;
+    height: 15px;
+    border-radius: 0.25rem;
   }
-    
-  .v-spinner {
-    position: absolute;
-    left: 50%;
-    top: -50px;
-    z-index: 1;
-    @include mobile {
-      left: 40%;
-    }
-    @include tablet {
-      left: 45%;
-    }
-  }
+  /*.v-spinner {*/
+  /*  position: absolute;*/
+  /*  left: 50%;*/
+  /*  top: -50px;*/
+  /*  z-index: 1;*/
+  /*  @include mobile {*/
+  /*    left: 40%;*/
+  /*  }*/
+  /*  @include tablet {*/
+  /*    left: 45%;*/
+  /*  }*/
+  /*}*/
   .item-container {
     width: 100%;
     
