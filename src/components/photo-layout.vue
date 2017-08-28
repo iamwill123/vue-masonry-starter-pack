@@ -60,7 +60,7 @@ export default {
     .then(response => {
       let flickrResponse = response.data
       this.getFlickrImages(flickrResponse)
-      setTimeout(() => { this.redrawMason() }, 1200) // temp fix
+      setTimeout(() => { this.redrawMason() }, 2000) // temp fix
       // this.photos = response.data
       console.log(`
         Status Response: ${flickrResponse.stat},
@@ -98,7 +98,7 @@ export default {
     background-color: whitesmoke;
     display: inline-block;
     width: 100%;
-    height: 15px;
+    height: 100vh;
     border-radius: 0.25rem;
   }
   /*.v-spinner {*/
