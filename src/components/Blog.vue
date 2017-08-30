@@ -22,17 +22,20 @@
         
         <div v-if="feeds.items">
           <div v-masonry-tile class="item" v-for="feed in feeds.items">
-            <div class="item-content">
-              <div class="img-blend">
-                <img src="http://placehold.it/300x150" alt="">
-                <!--<img v-bind:src="http://placehold.it/300x150">-->
-              </div>
-              <div class="caption">
-                <h3>{{feed.title | uppercase}}</h3>
-                <p>by: {{feed.author}}</p>
-                <p>
-                  <router-link :to="'/posts/4'" class="btn btn-outline-primary btn-block" role="button">Read</router-link>
-                </p>
+            <div v-if="feed.title == 'Create a responsive photo grid web app'">
+              <div class="item-content">
+                <div class="img-blend">
+                  <img src="http://placehold.it/300x150" alt="mediumUserImage">
+                  <!--<img v-bind:src="http://placehold.it/300x150">-->
+                </div>
+                <div class="caption">
+                  <h3>{{feed.title | uppercase}}</h3>
+                  <img src="https://cdn-images-1.medium.com/fit/c/150/150/1*5kkPOxkDf786jbl2SWz95Q.png" class="mediumImgThumb" alt="mediumUserImage">
+                  <p>{{feed.author}}</p>
+                  <p>
+                    <router-link :to="'/posts/4'" class="btn btn-outline-primary btn-block" role="button">Read</router-link>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -185,6 +188,9 @@ export default {
         padding: 0.9rem;
         background-color: whitesmoke;
         
+        .caption .mediumImgThumb {
+          width: 40px;
+        }
         .caption h3 {
           margin-top: 1rem;
           margin-bottom: 0.1rem;

@@ -16,12 +16,16 @@
       </div>
       
       <div v-for="feed in feeds.items" v-if="$route.params.id == 4">
-        <div class="caption">
-          <h3> {{ feed.title | uppercase }} </h3>
-          <p> by: {{ feed.author }} </p>
-          <p> {{ feed.pubDate | formatDate }} </p>
-          <div v-html="feed.description"></div>
-          <p> Route-id: {{ $route.params.id }} </p>
+        <div v-if="feed.title == 'Create a responsive photo grid web app'">
+          <div class="caption">
+            <h3> {{ feed.title | uppercase }} </h3>
+            <p> by: {{ feed.author }} </p>
+            <p> {{ feed.pubDate | formatDate }} | id: $route.params.id </p>
+          </div>
+          <div class="description">
+            <div v-html="feed.description"></div>
+            <!--<p> Route-id: {{ $route.params.id }} </p>-->
+          </div>
         </div>
         <hr>
       </div>
@@ -44,15 +48,17 @@
         </div>
         
         <div v-for="feed in feeds.items">
-          <div class="post-navigation">
-            <div v-masonry-tile class="item">
-              <div class="item-content">
-                <div class="caption">
-                  <h4> {{ feed.title }} </h4>
-                  <p> by: {{ feed.author }} </p>
-                  <p>
-                    <router-link :to="'/posts/4'" class="btn btn-outline-primary btn-block" role="button">Read</router-link>
-                  </p>
+          <div v-if="feed.title == 'Create a responsive photo grid web app'">
+            <div class="post-navigation">
+              <div v-masonry-tile class="item">
+                <div class="item-content">
+                  <div class="caption">
+                    <h4> {{ feed.title }} </h4>
+                    <p> by: {{ feed.author }} </p>
+                    <p>
+                      <router-link :to="'/posts/4'" class="btn btn-outline-primary btn-block" role="button">Read</router-link>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -130,7 +136,7 @@ export default {
   methods: {
     getMediumFeed: function (result) {
       this.feeds = result
-      // console.log(result)
+      console.log(`${result.items}`)
     }
   }
 }
@@ -146,6 +152,16 @@ export default {
   .caption {
     @include mobile {
       padding: 0 15px;
+    }
+  }
+  .description {
+    width: 100%;
+    margin: 0 auto;
+    figure {
+      max-width: 100%;
+      img {
+        float: left;
+      }
     }
   }
   .item-container {
