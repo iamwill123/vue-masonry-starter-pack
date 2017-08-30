@@ -13,7 +13,9 @@
           <transition name="fade" slot="placeholder">
             <div slot="placeholder">
               <!--<grid-loader :loading="loading" :color="color" :size="size"></grid-loader>-->
-              <div class="placeholderBCG"></div>
+              <div class="placeholderBCG">
+                <img :src="photo" alt="b&wPlaceholders">
+              </div>
             </div>
           </transition>
         </clazy-load>
@@ -60,7 +62,7 @@ export default {
     .then(response => {
       let flickrResponse = response.data
       this.getFlickrImages(flickrResponse)
-      setTimeout(() => { this.redrawMason() }, 2000) // temp fix
+      // setTimeout(() => { this.redrawMason() }, 2000) // temp fix
       // this.photos = response.data
       console.log(`
         Status Response: ${flickrResponse.stat},
@@ -96,10 +98,12 @@ export default {
   }
   .placeholderBCG {
     background-color: whitesmoke;
-    display: inline-block;
-    width: 100%;
-    height: 100vh;
     border-radius: 0.25rem;
+    img {
+      -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+      filter: grayscale(100%);
+      opacity: 0.5;
+    }
   }
   /*.v-spinner {*/
   /*  position: absolute;*/
