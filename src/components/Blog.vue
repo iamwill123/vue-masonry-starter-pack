@@ -1,8 +1,23 @@
 <template>
   <div class="blog container">
+    <h2>{{title}}</h2>
     <div class="row">
       
-      <div v-masonry class="item-container" transition-duration="0.5s" item-selector=".item">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewPost">
+        New Post
+      </button>
+        
+      <div v-masonry class="item-container" transition-duration="0s" item-selector=".item">
+        <div v-if="jokes">
+          <div v-masonry-tile class="item" v-for="joke in jokes">
+            <div class="item-content">
+              <div class="caption">
+                <p> {{joke.joke}} </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      
         <div v-if="posts && posts.length">
           <div v-masonry-tile class="item" v-for="post in posts">
             <div class="item-content">
@@ -13,35 +28,40 @@
                 <h3>{{post.title | uppercase}}</h3>
                 <p>by: {{post.user}}</p>
                 <p>
-                  <router-link :to="'/posts/' + post.id" class="btn btn-outline-primary btn-block" role="button">Read</router-link>
+                  <router-link to="/posts/photolayout" class="btn btn-outline-primary btn-block" role="button">Read</router-link>
                 </p>
               </div>
             </div>
           </div>
         </div>
         
-        <div v-if="feeds.items">
-          <div v-masonry-tile class="item" v-for="feed in feeds.items">
-            <div v-if="feed.title == 'Create a responsive photo grid web app'">
-              <div class="item-content">
-                <div class="img-blend">
-                  <img src="http://placehold.it/300x150" alt="mediumUserImage">
-                  <!--<img v-bind:src="http://placehold.it/300x150">-->
+      </div>
+      <!--Add Post modal -->
+      <div id="addNewPost" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+           <!--Add Post Content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Add New Post</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                  <label for="title">Title:</label>
+                  <input type="title" class="form-control" id="title" v-model="newPost.title">
                 </div>
-                <div class="caption">
-                  <h3>{{feed.title | uppercase}}</h3>
-                  <img src="https://cdn-images-1.medium.com/fit/c/150/150/1*5kkPOxkDf786jbl2SWz95Q.png" class="mediumImgThumb" alt="mediumUserImage">
-                  <p>{{feed.author}}</p>
-                  <p>
-                    <router-link :to="'/posts/4'" class="btn btn-outline-primary btn-block" role="button">Read</router-link>
-                  </p>
+                <div class="form-group">
+                  <label for="body">Content:</label>
+                  <textarea class="form-control" rows="5" id="body" v-model="newPost.body"></textarea>
                 </div>
-              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="addPost()">Add</button>
             </div>
           </div>
         </div>
-        
       </div>
+      <!--modal end-->
     </div>
   </div>  
 </template>
@@ -49,71 +69,64 @@
 <script>
 import Vue from 'vue'
 import {VueMasonryPlugin} from 'vue-masonry'
-import {RSS2JSON} from './http-common'
+import {chuckNorrisJokes} from './http-common'
 
 Vue.use(VueMasonryPlugin)
 
 export default {
-  name: 'blog',
+  name: 'Starter-Pack',
   data () {
     return {
-      title: 'Blog App',
+      title: 'Starter pack for Vue-masonry and other goodies.',
       newPost: {},
-      feeds: [],
+      jokes: [],
       errors: [],
       posts: [{
-        'user': 'Will & Steph',
+        'user': 'Norris',
         'id': 0,
-        'title': 'EuroTrip',
-        'body': 'quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto',
-        'imageURL': 'https://farm5.static.flickr.com/4325/35861704352_bb85336569.jpg'
+        'title': 'Chuck Norris invented Kentucky Fried..',
+        'imageURL': 'http://placehold.it/300x300'
       },
       {
-        'user': 'Steph',
+        'user': 'Chuck',
         'id': 1,
-        'title': 'qui est esse',
-        'body': 'est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla',
-        'imageURL': 'http://placehold.it/300x150'
+        'title': 'Chuck Norris has two speeds. Walk, and Kill',
+        'imageURL': 'http://placehold.it/300x100'
       },
       {
         'user': 'Will',
         'id': 2,
-        'title': 'ea molestias quasi exercitationem repellat qui ipsa sit aut',
-        'body': 'et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut',
-        'imageURL': 'http://placehold.it/300x150'
+        'title': 'iphone 4? chuck norris has iphone 8',
+        'imageURL': 'http://placehold.it/300x250'
       },
       {
         'user': 'Steph',
         'id': 3,
-        'title': 'ea molestias quasi exercitationem repellat qui ipsa sit aut',
-        'body': 'et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut',
+        'title': 'Chuck Norris can slam a revolving door',
         'imageURL': 'http://placehold.it/300x150'
       }]
     }
   },
   created: function () {
-    let mediumUserWill = `https://medium.com/feed/@iamwill.us`
-    RSS2JSON.get(`?rss_url=${mediumUserWill}`)
+    // http://api.icndb.com/jokes/random/5
+    chuckNorrisJokes.get(`5`)
     .then(response => {
-      let mediumResponse = response.data
-      this.getMediumFeed(mediumResponse)
+      let randomJokes = response.data
+      this.chuckNorris(randomJokes)
       console.log(`
-        Status Response: ${mediumResponse.status},
-        Medium Url: ${mediumResponse.feed.url},
-        Medium Title: ${mediumResponse.feed.title},
-        Medium Link: ${mediumResponse.feed.link},
-        Medium Image: ${mediumResponse.feed.image}
+        Status Response: ${randomJokes.type},
+        Data: ${randomJokes.value}
       `)
     })
     .catch(e => {
       this.errors.push(e)
-      console.log(`<error> ${e} </error>`)
+      console.log(`Error: ${e}`)
     })
   },
   methods: {
-    getMediumFeed: function (result) {
-      this.feeds = result
-      console.log(`Medium fetch successful`)
+    chuckNorris: function (result) {
+      this.jokes = result.value
+      console.log(`Chuck is here, your browser will now explode`)
     },
     deletePost: function (post) {
       console.log(post)
@@ -137,7 +150,11 @@ export default {
 
 <style lang="scss" scoped>
 @import 'styles/global.scss';
-
+  
+  .container h2 {
+    text-align: center;
+  }
+  
  .blog {
    background-color: transparent;
    margin-top: 2rem;
@@ -232,33 +249,3 @@ export default {
     }
   }
 </style>
-
-<!--http://baljeetsingh.in/blog/running-vue-js-2-0-creating-simple-blog-application-709/-->
-<!--<h2 class="blog-main--title">{{title}}</h2>-->
-    <!-- Trigger the modal add post with a button -->
-    <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewPost">New Post</button>-->
-    <!-- Add Post -->
-    <!--<div id="addNewPost" class="modal fade" role="dialog">-->
-    <!--  <div class="modal-dialog">-->
-        <!-- Add Post Content-->
-    <!--    <div class="modal-content">-->
-    <!--      <div class="modal-header">-->
-    <!--        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
-    <!--        <h4 class="modal-title">Add New Post</h4>-->
-    <!--      </div>-->
-    <!--      <div class="modal-body">-->
-    <!--          <div class="form-group">-->
-    <!--            <label for="title">Title:</label>-->
-    <!--            <input type="title" class="form-control" id="title" v-model="newPost.title">-->
-    <!--          </div>-->
-    <!--          <div class="form-group">-->
-    <!--            <label for="body">Content:</label>-->
-    <!--            <textarea class="form-control" rows="5" id="body" v-model="newPost.body"></textarea>-->
-    <!--          </div>-->
-    <!--      </div>-->
-    <!--      <div class="modal-footer">-->
-    <!--        <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="addPost()">Add</button>-->
-    <!--      </div>-->
-    <!--    </div>-->
-    <!--  </div>-->
-    <!--</div>-->

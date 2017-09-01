@@ -1,6 +1,6 @@
-# S&W Blog 
+# vue-masonry-starter-pack
 
-> Personal Blog project with Steph Del Rio <3
+<!--https://shershen08.github.io/vue-plugins-demo-static/index.html#/masonry-->
 
 ## Build Setup
 
@@ -18,17 +18,6 @@ npm run build
 npm run build --report
 
 ```
-
-## Version Control
-Bitbucket, https://bitbucket.org/iamwillyuan/sw-blog
-
-## Hosting
-https://www.netlify.com/blog/2016/09/21/a-step-by-step-guide-victor-hugo-on-netlify/
-
-## References
-
-# favicon generator
-http://www.favicon-generator.org/
 
 
 

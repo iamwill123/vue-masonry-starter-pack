@@ -26,26 +26,24 @@
             <a class="nav-link disabled" href="#"> Contact </a>
           </li>
         </ul>
-        <!--<form class="form-inline my-2 my-lg-0">-->
-        <!--  <input class="form-control mr-sm-2" type="text" placeholder="Search">-->
-        <!--  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
-        <!--</form>-->
       </div>
     </nav>
     <hr>
-    <div class="sw-logo">
-      <img src="./assets/swLogo.png" class="img-responsive" alt="steph and will logo">
+    <div class="logos">
+      <img src="./assets/swLogo.png" class="img-responsive" alt="s&w logo"> +
+      <img src="./assets/vueLogo.png" class="img-responsive" alt="vue logo"> +
+      <img src="./assets/masonryLogo.jpg" class="img-responsive" alt="masonry logo">
     </div>
     <hr>
   
     <router-view></router-view>
   
     <!--Footer-->
-    <footer class="navbar navbar-default navbar-fixed-bottom">
+    <div class="navbar navbar-default navbar-fixed-bottom">
       <div class="container">
-        <p class="navbar-text pull-left">© {{ dateNow }}</p>
+        <p class="footer-block pull-left">© {{ dateNow }}</p>
       </div>
-    </footer>
+    </div>
     <!--/.Footer-->
   </div>
 </template>
@@ -81,10 +79,9 @@ export default {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /*text-align: center;*/
     color: #2c3e50;
-    /*margin-top: 60px;*/
-    .sw-logo {
+    
+    .logos {
       text-align: center;
       
       @include mobileAndTablet {
@@ -92,7 +89,8 @@ export default {
       }
       
       img {
-        width: 100px;
+        height: 100px;
+        padding: 0 1rem;
         -webkit-transition: 500ms;
         -moz-transition: 500ms;
         -ms-transition: 500ms;
@@ -100,7 +98,7 @@ export default {
         transition: 500ms;
         
         @include mobileAndTablet {
-          width: 60px;
+          height: 60px;
           -webkit-transition: 500ms;
           -moz-transition: 500ms;
           -ms-transition: 500ms;
@@ -135,7 +133,7 @@ export default {
     .navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
       color: rgba(0,0,0,1);
     }
-    footer {
+    .navbar-fixed-bottom {
       background-color: #f7f7f7;
     }
   }

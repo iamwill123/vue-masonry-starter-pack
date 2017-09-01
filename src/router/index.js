@@ -15,16 +15,14 @@ export default new Router({
   routes: [
     { path: '/', component: Blog },
     { path: '/hello', component: Hello },
-    { path: '/posts/:id',
+    { path: '/posts',
       component: Posts,
       children: [
         {
-          path: '',
+          path: '/posts/:id',
           component: PhotoLayout
         }
       ]
     }
   ]
 })
-
-// <!--check out https://vuetifyjs.com/vuetify-->
