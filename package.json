@@ -1,7 +1,7 @@
 {
-  "name": "sw-blog",
+  "name": "vue-masonry-starter-pack",
   "version": "1.0.0",
-  "description": "vue-blog-project",
+  "description": "vue masonry starter pack",
   "author": "William Pei Yuan <williampeiyuan@gmail.com>",
   "private": true,
   "scripts": {
@@ -18,16 +18,13 @@
     "moment": "^2.18.1",
     "net": "^1.0.2",
     "node-sass": "^4.5.3",
-    "rss-to-json": "^1.0.2",
     "sass-loader": "^6.0.6",
     "tls": "0.0.1",
     "vue": "^2.2.1",
     "vue-clazy-load": "^0.1.5",
-    "vue-content-scroll-progress": "0.0.3",
     "vue-masonry": "^0.10.10",
     "vue-resource": "^1.3.4",
-    "vue-router": "^2.6.0",
-    "vue-spinner": "^1.0.2"
+    "vue-router": "^2.6.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

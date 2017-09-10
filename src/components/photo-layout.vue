@@ -47,12 +47,11 @@ export default {
   created: function () {
     let API_KEY = `8f29ca9d04e2badc2e07dc346663e0f9`
     let photoSetID = `72157685222990161`
-    // this.loading = true
     HTTP.get(`?method=flickr.photosets.getPhotos&api_key=${API_KEY}&photoset_id=${photoSetID}&privacy_filter=1&format=json&nojsoncallback=1`)
     .then(response => {
       let flickrResponse = response.data
       this.getFlickrImages(flickrResponse)
-      setTimeout(() => { this.redrawMason() }, 1000) // temporary fix
+      setTimeout(() => { this.redrawMason() }, 1000)
       console.log(`
         Status Response: ${flickrResponse.stat},
         Owner Name: ${flickrResponse.photoset.ownername},

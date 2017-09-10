@@ -1,6 +1,12 @@
 # vue-masonry-starter-pack
 
-<!--https://shershen08.github.io/vue-plugins-demo-static/index.html#/masonry-->
+This starter template helps you get started with Vue and the Vue Masonry node package built by Mikhail Kuznetcov.
+
+Found here: https://github.com/shershen08/vue-masonry
+ 
+The original masonry library: https://masonry.desandro.com/
+
+I've created this template for others to get started with the vue-masonry component and the use of axios to fetch data.
 
 ## Build Setup
 

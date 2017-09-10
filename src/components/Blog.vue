@@ -7,7 +7,7 @@
         New Post
       </button>
         
-      <div v-masonry class="item-container" transition-duration="0s" item-selector=".item">
+      <div v-masonry class="item-container" transition-duration="0.5s" item-selector=".item">
         <div v-if="jokes">
           <div v-masonry-tile class="item" v-for="joke in jokes">
             <div class="item-content">
