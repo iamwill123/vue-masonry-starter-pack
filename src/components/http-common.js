@@ -5,5 +5,5 @@ export const HTTP = axios.create({
 })
 
 export const chuckNorrisJokes = axios.create({
-  baseURL: `http://api.icndb.com/jokes/random/`
+  baseURL: `https://api.icndb.com/jokes/random/`
 })
