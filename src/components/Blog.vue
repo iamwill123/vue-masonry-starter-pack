@@ -85,32 +85,33 @@ export default {
         'user': 'Norris',
         'id': 0,
         'title': 'Chuck Norris invented Kentucky Fried..',
-        'imageURL': 'http://placehold.it/300x300'
+        'imageURL': 'https://placehold.it/300x300'
       },
       {
         'user': 'Chuck',
         'id': 1,
         'title': 'Chuck Norris has two speeds. Walk, and Kill',
-        'imageURL': 'http://placehold.it/300x100'
+        'imageURL': 'https://placehold.it/300x100'
       },
       {
         'user': 'Will',
         'id': 2,
         'title': 'iphone 4? chuck norris has iphone 8',
-        'imageURL': 'http://placehold.it/300x250'
+        'imageURL': 'https://placehold.it/300x250'
       },
       {
         'user': 'Steph',
         'id': 3,
         'title': 'Chuck Norris can slam a revolving door',
-        'imageURL': 'http://placehold.it/300x150'
+        'imageURL': 'https://placehold.it/300x150'
       }]
     }
   },
   created: function () {
     // http://api.icndb.com/jokes/random/5
-    chuckNorrisJokes.get(`5`)
-    .then(response => {
+    chuckNorrisJokes.get(`5`, {
+      headers: { crossdomain: true }
+    }).then(response => {
       let randomJokes = response.data
       this.chuckNorris(randomJokes)
       console.log(`
