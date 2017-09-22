@@ -51,7 +51,6 @@ export default {
     .then(response => {
       let flickrResponse = response.data
       this.getFlickrImages(flickrResponse)
-      setTimeout(() => { this.redrawMason() }, 1000)
       console.log(`
         Status Response: ${flickrResponse.stat},
         Owner Name: ${flickrResponse.photoset.ownername},
