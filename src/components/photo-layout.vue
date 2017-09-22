@@ -69,9 +69,6 @@ export default {
       this.photos = result.photoset.photo.map(function (img) {
         return `https://farm${img.farm}.static.flickr.com/${img.server}/${img.id}_${img.secret}.jpg`
       })
-    },
-    redrawMason: function () {
-      Vue.redrawVueMasonry()
     }
   }
 }

@@ -109,9 +109,7 @@ export default {
   },
   created: function () {
     // http://api.icndb.com/jokes/random/5
-    chuckNorrisJokes.get(`5`, {
-      headers: { crossdomain: true }
-    }).then(response => {
+    chuckNorrisJokes.get('5').then(response => {
       let randomJokes = response.data
       this.chuckNorris(randomJokes)
       console.log(`
